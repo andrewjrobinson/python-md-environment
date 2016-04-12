@@ -1,0 +1,5 @@
+site_name: mdx_environment
+repo_url: https://github.com/andrewjrobinson/python-md-environment
+site_author: Andrew Robinson
+markdown_extensions:
+  ['mdx_environment:EnvironmentExtension']

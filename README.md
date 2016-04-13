@@ -8,12 +8,12 @@ Python Markdown extension to insert and control content based on environment var
 The simplest method is to install via pip
 
 ```sh
-pip install python-md-environment
+pip install mdx_environment
 ```
 
 **Alternate**:
 
-Download this repository and put the mdx_showable directory into your python path
+Download this repository and put the mdx_environment directory into your python path
 
 ## Documentation
 

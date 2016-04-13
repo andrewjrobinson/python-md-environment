@@ -110,7 +110,7 @@ I.e. 2 is not the same as 2.0
 ### \_MD\_ENV\_LOADED\_ variable
 
 The extension will print a warning on the python logger if the \_MD\_ENV\_LOADED\_ environment variable is
-not set.  This allows makes it easy to remember that you forgot to load your environment variables.  It
+not set.  This makes it easy to remember that you forgot to load your environment variables.  It
 is recommended that you create a env/defaults.sh script that you *source* from each of your context 
 scripts.
 

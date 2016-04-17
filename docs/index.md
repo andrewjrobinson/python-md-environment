@@ -111,7 +111,7 @@ I.e. 2 is not the same as 2.0
 
 The extension will print a warning on the python logger if the \_MD\_ENV\_LOADED\_ environment variable is
 not set.  This makes it easy to remember that you forgot to load your environment variables.  It
-is recommended that you create a env/defaults.sh script that you *source* from each of your context 
+is recommended that you create a enviro/defaults.sh script that you *source* from each of your context 
 scripts.
 
 ### Suggested directory structure
@@ -133,25 +133,25 @@ export MY_VAR="andrewjrobinson.github.io"
 export CAMEL="I have one hUMp"
 ```
 
-*env/context1.sh*:
+*enviro/context1.sh*:
 ```sh
 #!/bin/bash
 # overrides for context 1
 
 ## import defaults ##
-source env/defaults.sh
+source enviro/defaults.sh
 
 ## Override values for this context ##
 export CAMEL="I have two hUmPs"
 ```
 
-*env/env-examples.sh*:
+*enviro/env-examples.sh*:
 ```sh
 #!/bin/bash
 # overrides for this documentation
 
 ## import defaults ##
-source env/defaults.sh
+source enviro/defaults.sh
 
 ## Override values for this context ##
 export CAMEL="tHe CaMeL sAiD"

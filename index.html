@@ -103,7 +103,7 @@
 </code></pre>
 
 <p><strong>Example</strong>:</p>
-<p><em>Host</em>: <span class="environment_env" id="env0">andrewjrobinson.github.io</span></p>
+<p><em>Host</em>: <span class="environment_env" id="env0"></span></p>
 <p><strong>html</strong>:</p>
 <pre><code class="html">&lt;p&gt;
     &lt;em&gt;Host&lt;/em&gt;: 
@@ -168,7 +168,7 @@ Content that is only rendered if MY_VAR is NOT set or has a value: &quot;0&quot;
 <h3 id="95md95env95loaded95-variable">_MD_ENV_LOADED_ variable</h3>
 <p>The extension will print a warning on the python logger if the _MD_ENV_LOADED_ environment variable is
 not set.  This makes it easy to remember that you forgot to load your environment variables.  It
-is recommended that you create a env/defaults.sh script that you <em>source</em> from each of your context 
+is recommended that you create a enviro/defaults.sh script that you <em>source</em> from each of your context 
 scripts.</p>
 <h3 id="suggested-directory-structure">Suggested directory structure</h3>
 <p>It is recommended that you create a <em>defaults.sh</em> file that is <em>sourced</em> by all your context specific
@@ -186,23 +186,23 @@ export MY_VAR=&quot;andrewjrobinson.github.io&quot;
 export CAMEL=&quot;I have one hUMp&quot;
 </code></pre>
 
-<p><em>env/context1.sh</em>:</p>
+<p><em>enviro/context1.sh</em>:</p>
 <pre><code class="sh">#!/bin/bash
 # overrides for context 1
 
 ## import defaults ##
-source env/defaults.sh
+source enviro/defaults.sh
 
 ## Override values for this context ##
 export CAMEL=&quot;I have two hUmPs&quot;
 </code></pre>
 
-<p><em>env/env-examples.sh</em>:</p>
+<p><em>enviro/env-examples.sh</em>:</p>
 <pre><code class="sh">#!/bin/bash
 # overrides for this documentation
 
 ## import defaults ##
-source env/defaults.sh
+source enviro/defaults.sh
 
 ## Override values for this context ##
 export CAMEL=&quot;tHe CaMeL sAiD&quot;
@@ -253,5 +253,5 @@ export CAMEL=&quot;tHe CaMeL sAiD&quot;
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-04-13 01:24:44.815408
+Build Date UTC : 2016-04-17 23:49:10.116792
 -->

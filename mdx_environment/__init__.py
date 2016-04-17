@@ -89,7 +89,7 @@ if "_MD_ENV_LOADED_" not in os.environ:
     import logging
     log = logging.getLogger("mkdocs.mdx_environment")
     log.warn("_MD_ENV_LOADED_ environment variable not set when using the mdx_environment extension.  Did you forget to source the environment file?")
-    log.info("Maybe you want to run 'source env/defaults.sh' or one of the other '.sh' files in 'env/'")
+    log.info("Maybe you want to run 'source enviro/defaults.sh' or one of the other '.sh' files in 'enviro/'")
 
 
 ################

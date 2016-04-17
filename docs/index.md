@@ -120,7 +120,7 @@ It is recommended that you create a *defaults.sh* file that is *sourced* by all 
 environment files.  If you put the \_MD\_ENV\_LOADED\_ variable in the defaults.sh file then users will
 automatically get a warning message if they forget to *source* one of your context files.
 
-*env/defaults.sh*:
+*enviro/defaults.sh*:
 ```sh
 #!/bin/bash
 # default variables used by workshops

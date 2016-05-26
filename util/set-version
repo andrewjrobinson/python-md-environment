@@ -78,6 +78,7 @@ else
 	echo ""
 	echo "# Add git tag"
 	echo "git commit -m 'Version $VERSION'"
+	echo "git tag -a v$VERSION -m 'Version $VERSION'"
 	echo "git push"
 	echo "git push --tags"
 fi

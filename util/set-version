@@ -5,7 +5,7 @@
 # get current versions
 SRC_VER=$(grep "__version__" mdx_environment/__init__.py | sed 's/^__version__ = '\''\([.0-9]*\)'\''$/\1/')
 STP_VER=$(grep "^version" setup.py | sed 's/^version='\''\([.0-9]*\)'\''$/\1/')
-TAG_VER=$(git describe --exact-match --abbrev=0 | cut -c 2-)
+TAG_VER=$(git describe --abbrev=0 | cut -c 2-)
 
 echo "# Current versions:"
 echo "#  - Source:   $SRC_VER"
@@ -26,7 +26,7 @@ VERSION=$1
 if [ $SRC_VER != $VERSION ] || [ $STP_VER != $VERSION ]; then
 	if [ $TAG_VER == $VERSION ]; then
 		echo "# ERROR: unable to use this version because source and/or setup.py" 
-		echo "#        needs updating and  tag already exists"
+		echo "#        needs updating and tag already exists"
 		exit 2
 	fi
 fi

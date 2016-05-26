@@ -31,7 +31,7 @@
 ##
 
 ## Following line updated by util/set-version script, DO NOT EDIT
-version='0.2.0'
+version='0.2.1'
 
 from distutils.core import setup
 setup(

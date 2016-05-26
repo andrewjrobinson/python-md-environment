@@ -81,7 +81,7 @@ import os
 import re
 
 ## Set the version Number
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 # Add warning that the environment might not be loaded

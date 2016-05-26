@@ -30,6 +30,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##
 
+## Following line updated by util/set-version script, DO NOT EDIT
 version='0.1.1'
 
 from distutils.core import setup

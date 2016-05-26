@@ -80,7 +80,7 @@ from markdown.util import etree
 import os
 import re
 
-## Set the version Number
+## Following line updated by util/set-version script, DO NOT EDIT
 __version__ = '0.1.2'
 
 

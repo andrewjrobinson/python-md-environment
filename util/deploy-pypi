@@ -5,11 +5,22 @@
 # get current versions
 SRC_VER=$(grep "__version__" mdx_environment/__init__.py | sed 's/^__version__ = '\''\([.0-9]*\)'\''$/\1/')
 STP_VER=$(grep "^version" setup.py | sed 's/^version='\''\([.0-9]*\)'\''$/\1/')
-TAG_VER=$(git describe --exact-match --abbrev=0 | cut -c 2-)
+TAG_VER=$(git describe --exact-match --abbrev=0 2>/dev/null | cut -c 2-)
 
+echo "# Current versions:"
+echo "#  - Source:   $SRC_VER"
+echo "#  - Setup:    $STP_VER"
+echo "#  - Tag:      $TAG_VER"
+echo ""
+
+# check tag version was found (on most recent commit)
+if [ "v$TAG_VER" == "v" ]; then
+	echo "# ERROR: Most recent commit isn't tagged"
+	exit 1
+fi
 
 # check versions agree
-if [ $SRC_VER != $TAG_VER ] || [ $STP_VER != $TAG_VER ]; then
+if [ "v$SRC_VER" != "v$TAG_VER" ] || [ "v$STP_VER" != "v$TAG_VER" ]; then
 	echo "# ERROR: Source-code, setup.py and git tag versions must all agree"
 	exit 2
 fi

@@ -19,12 +19,12 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-echo ""
 VERSION=$1
 
 # version check
 if [ $SRC_VER != $VERSION ] || [ $STP_VER != $VERSION ]; then
 	if [ $TAG_VER == $VERSION ]; then
+		echo ""
 		echo "# ERROR: unable to use this version because source and/or setup.py" 
 		echo "#        needs updating and tag already exists"
 		exit 2
@@ -34,6 +34,7 @@ fi
 # git all committed?
 _=$(git status | grep "nothing to commit")
 if [ $? -ne 0 ]; then
+	echo ""
 	echo "# ERROR: unable to continue as you have un-committed changes"
 	exit 3
 fi
@@ -41,35 +42,43 @@ fi
 # git on master branch
 _=$(git status | grep "On branch master")
 if [ $? -ne 0 ]; then
+	echo ""
 	echo "# ERROR: can only update version from master branch"
 	exit 4
 fi
 
 # update Source code version
 if [ $SRC_VER == $VERSION ]; then
+	echo ""
 	echo "# Source-code version correct, skipping"
 else
 	# update source code
+	echo ""
+	echo "# Update source code"
 	echo "sed -i 's/^__version__ = '\''[.0-9]*'\''\$/__version__ = '\''$VERSION'\''/' mdx_environment/__init__.py"
 	echo "git add mdx_environment/__init__.py"
 fi
 
 # update setup.py version
 if [ $STP_VER == $VERSION ]; then
+	echo ""
 	echo "# Skipping setup.py version update"
 else
-	echo "# Update setup.py
+	echo ""
+	echo "# Update setup.py"
 	echo "sed -i '/^version='\''\([.0-9]*\)'\''\$/,\${s//version='\'$VERSION\''/;b};\$q1' setup.py"
 	echo "git add setup.py"
 fi
 
 # tag the new version
 if [ $TAG_VER == $VERSION ]; then
+	echo ""
 	echo "# Skipping git tag version"
 else
+	echo ""
 	echo "# Add git tag"
 	echo "git commit -m 'Version $VERSION'"
 	echo "git push"
-	echo "git puss --tags"
+	echo "git push --tags"
 fi
 

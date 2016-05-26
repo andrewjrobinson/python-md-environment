@@ -9,7 +9,7 @@ source "enviro/env-examples.sh"
 export PYTHONPATH="."
 
 # do the deployment
-mkdocs gh-deploy
+mkdocs gh-deploy --clean
 
 # cleanup (causes issue with mkdocs if left behind)
 rm -R site

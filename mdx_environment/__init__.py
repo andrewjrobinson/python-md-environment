@@ -162,7 +162,6 @@ class ElementProcessor(BlockProcessor):
             self.parser.parseBlocks(parent, [matchVars['pre']])
             
             elm = etree.SubElement(parent, matchVars['name'])
-#             elm.set("class", "environment_if")
             
             # add children
             self.parser.parseBlocks(elm, myblocks)
@@ -216,8 +215,6 @@ class EnvironmentIfProcessor(BlockProcessor):
             self._id += 1
             
             # push the rest back into queue for processing
-#             print ("if%s: raw_block(%s)"% (myid, raw_block))
-#             print ("if%s:   matches(%s)"% (myid, matchVars))
             inline = False
             if matchVars['post'] != "" and matchVars['post'] is not None:
                 inline = self._isInline(matchVars['post'])
@@ -225,8 +222,6 @@ class EnvironmentIfProcessor(BlockProcessor):
             
             # check for children
             myblocks = self._removeUntilMatching(blocks)
-            
-            
             
             # check if the value should be displayed
             show = False
@@ -259,11 +254,15 @@ class EnvironmentIfProcessor(BlockProcessor):
                         show = op < val
             elif envName is not None and envName != "":
                 if envName.lstrip().startswith("!"):
-                    show = envName[1:] not in os.environ or os.environ[envName[1:]].strip().lower() in ("0", "", "false", "f", "no", "n")
+                    envName = envName[1:]
+                    envVal = os.environ[envName]
+                    show = envName not in os.environ or envVal.strip().lower() in ("0", "", "false", "f", "no", "n")
                 else:
-                    show = envName in os.environ and envVal not in ("0", "", "false", "f", "no", "n")
+                    show = envName in os.environ and envVal.strip().lower() not in ("0", "", "false", "f", "no", "n")
             else:
-                print ("Error: missing environment variable name")
+                import logging
+                log = logging.getLogger("mkdocs.mdx_environment")
+                log.error("Missing environment variable name")
             
             # construct me if necessary
             if inline:
@@ -339,8 +338,6 @@ class EnvironmentIfProcessor(BlockProcessor):
         # next block
          
         return False
-            
-
 # end EnvironmentIfProcessor
 
 
@@ -355,49 +352,9 @@ class EnvironmentExtension(Extension):
         md.inlinePatterns.add('environmentpattern2', EnvironmentPattern(ENVPATTERN2), '_begin')
         
         
-
 def makeExtension(*args, **kwargs):
     return EnvironmentExtension(*args, **kwargs)
 
-# ----- TESTING -----
-mdtext = '''
-This is a paragraph and this should be --special--
 
-Today we will be using \env{UNIXHOSTNAME}{upper}
 
-This is a line with the hostname: \env{UNIXHOSTFULL} and port: \env{UNIXPORT}
 
-**Bold**: \env{UNIXHOSTSHORT}
-
-\env{HOSTNAME}\env{UNIXHOSTSHORT}
-scp -P \env{UNIXPORT} \env{UNIXHOSTFULL}:result.txt .
-
-some\if{NOTDEF}
-
-Shouldn't show
-
-\endifthing
-
-hel\if{UNIXHOSTNAME}
-
-It appears that you will be using \env{UNIXHOSTNAME}{upper} today
-
-\endiflo
-
-ssh \if{UNIXPORT != 22}-p \env{UNIXPORT}\endif
-\env{UNIXHOSTFULL}
-
-helloworld
-'''
-
-if __name__ == "__main__":
-    
-    os.environ['UNIXHOSTFULL'] = "lims-hpc-m.latrobe.edu.au"
-    os.environ['UNIXHOSTSHORT'] = "lims-hpc-m"
-    os.environ['UNIXHOSTNAME'] = "lims-hpc"
-    os.environ['UNIXPORT'] = "6022"
-#     os.environ['UNIXPORT'] = "22"
-    
-    print (mdtext)
-    print ("------")
-    print (markdown.markdown(mdtext, [EnvironmentExtension(None)]))

@@ -81,7 +81,7 @@ import os
 import re
 
 ## Following line updated by util/set-version script, DO NOT EDIT
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 
 # Add warning that the environment might not be loaded

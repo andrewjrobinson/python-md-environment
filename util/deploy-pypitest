@@ -21,6 +21,13 @@ if [ $? -ne 0 ]; then
 	exit 3
 fi
 
+# git on master branch
+_=$(git status | grep "On branch master")
+if [ $? -ne 0 ]; then
+	echo "# ERROR: can only deploy from master branch"
+	exit 4
+fi
+
 # Register
 echo "python setup.py register -r pypitest"
 

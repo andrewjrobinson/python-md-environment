@@ -38,6 +38,13 @@ if [ $? -ne 0 ]; then
 	exit 3
 fi
 
+# git on master branch
+_=$(git status | grep "On branch master")
+if [ $? -ne 0 ]; then
+	echo "# ERROR: can only update version from master branch"
+	exit 4
+fi
+
 # update Source code version
 if [ $SRC_VER == $VERSION ]; then
 	echo "# Source-code version correct, skipping"

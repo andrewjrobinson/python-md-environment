@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# sets the version within the code and creates and pushes a tag
+
+# get current versions
+SRC_VER=$(grep "__version__" mdx_environment/__init__.py | sed 's/^__version__ = '\''\([.0-9]*\)'\''$/\1/')
+STP_VER=$(grep "^version" setup.py | sed 's/^version='\''\([.0-9]*\)'\''$/\1/')
+TAG_VER=$(git describe --exact-match --abbrev=0 | cut -c 2-)
+
+echo "# Current versions:"
+echo "#  - Source:   $SRC_VER"
+echo "#  - Setup:    $STP_VER"
+echo "#  - Tag:      $TAG_VER"
+
+# Argument check
+if [ $# -ne 1 ]; then
+	echo ""
+	echo "Usage: $0 VERSION"
+	exit 1
+fi
+
+echo ""
+VERSION=$1
+
+# version check
+if [ $SRC_VER != $VERSION ] || [ $STP_VER != $VERSION ]; then
+	if [ $TAG_VER == $VERSION ]; then
+		echo "# ERROR: unable to use this version because source and/or setup.py" 
+		echo "#        needs updating and  tag already exists"
+		exit 2
+	fi
+fi
+
+# git all committed?
+_=$(git status | grep "nothing to commit")
+if [ $? -ne 0 ]; then
+	echo "# ERROR: unable to continue as you have un-committed changes"
+	exit 3
+fi
+
+# update Source code version
+if [ $SRC_VER == $VERSION ]; then
+	echo "# Source-code version correct, skipping"
+else
+	# update source code
+	echo "sed -i 's/^__version__ = '\''[.0-9]*'\''\$/__version__ = '\''$VERSION'\''/' mdx_environment/__init__.py"
+	echo "git add mdx_environment/__init__.py"
+fi
+
+# update setup.py version
+if [ $STP_VER == $VERSION ]; then
+	echo "# Skipping setup.py version update"
+else
+	echo "# Update setup.py
+	echo "sed -i '/^version='\''\([.0-9]*\)'\''\$/,\${s//version='\'$VERSION\''/;b};\$q1' setup.py"
+	echo "git add setup.py"
+fi
+
+# tag the new version
+if [ $TAG_VER == $VERSION ]; then
+	echo "# Skipping git tag version"
+else
+	echo "# Add git tag"
+	echo "git commit -m 'Version $VERSION'"
+	echo "git push"
+	echo "git puss --tags"
+fi
+

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# deploys the package to pypitest
+
+# get current versions
+SRC_VER=$(grep "__version__" mdx_environment/__init__.py | sed 's/^__version__ = '\''\([.0-9]*\)'\''$/\1/')
+STP_VER=$(grep "^version" setup.py | sed 's/^version='\''\([.0-9]*\)'\''$/\1/')
+TAG_VER=$(git describe --exact-match --abbrev=0 | cut -c 2-)
+
+
+# check versions agree
+if [ $SRC_VER != $TAG_VER ] || [ $STP_VER != $TAG_VER ]; then
+	echo "# ERROR: Source-code, setup.py and git tag versions must all agree"
+	exit 2
+fi
+
+# git all committed?
+_=$(git status | grep "nothing to commit")
+if [ $? -ne 0 ]; then
+	echo "# ERROR: unable to continue as you have un-committed changes"
+	exit 3
+fi
+
+# Register
+echo "python setup.py register -r pypitest"
+
+# Upload
+echo "python setup.py sdist upload -r pypitest"
+
